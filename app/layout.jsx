@@ -4,7 +4,7 @@ import Provider from './components/Provider';
 
 
 
-export const Metadata = {
+export const metadata = {
     title: 'PromptSphere',
     description: "Découvrez et partagez l'AI prompt",
 
