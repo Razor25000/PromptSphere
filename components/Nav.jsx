@@ -19,7 +19,7 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className='flex-between w-full mb-16 pt-3'>
+    <nav className='w-full pt-3 mb-16 flex-between'>
       <Link href='/' className='flex gap-2 flex-center'>
         <Image
           src='/assets/images/logo.svg'
@@ -32,11 +32,11 @@ const Nav = () => {
       </Link>
 
       {/* Desktop Navigation */}
-      <div className='sm:flex hidden'>
+      <div className='hidden sm:flex'>
         {session?.user ? (
           <div className='flex gap-3 md:gap-5'>
             <Link href='/create-prompt' className='black_btn'>
-              Create Post
+              Créer un prompt
             </Link>
 
             <button type='button' onClick={signOut} className='outline_btn'>
@@ -73,7 +73,7 @@ const Nav = () => {
       </div>
 
       {/* Mobile Navigation */}
-      <div className='sm:hidden flex relative'>
+      <div className='relative flex sm:hidden'>
         {session?.user ? (
           <div className='flex'>
             <Image
@@ -107,7 +107,7 @@ const Nav = () => {
                     setToggleDropdown(false);
                     signOut();
                   }}
-                  className='mt-5 w-full black_btn'
+                  className='w-full mt-5 black_btn'
                 >
                   Sign Out
                 </button>
