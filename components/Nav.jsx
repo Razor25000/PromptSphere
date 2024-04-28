@@ -126,7 +126,7 @@ const Nav = () => {
                   }}
                   className='black_btn'
                 >
-                  Sign in
+                  Se connecter
                 </button>
               ))}
           </>
