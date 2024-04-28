@@ -48,7 +48,8 @@ export const DELETE = async (req, { params }) => {
         await Prompt.findByIdAndDelete(params.id)
         return new Response('Prompt supprimé', {
             status: 200,
-        })}
+        })
+    }
     catch (error) {
         return new Response(error, {
             status: 500,

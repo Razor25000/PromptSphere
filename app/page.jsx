@@ -1,14 +1,15 @@
-import Feed from "./components/Feed";
+import Feed from "@components/Feed";
 
 const Home = () => (
-  <section className='flex-col w-full flex-center'>
-    <h1 className='text-center head_text'>
-      Découvrez & Partagez
+  <section className='w-full flex-center flex-col'>
+    <h1 className='head_text text-center'>
+      Discover & Share
       <br className='max-md:hidden' />
-      <span className='text-center orange_gradient'> Une aide alimentée par l'IA</span>
+      <span className='orange_gradient text-center'> AI-Powered Prompts</span>
     </h1>
-    <p className='text-center desc'>
-      PromptSphere est un outil open-source d'IA pour le monde moderne qui permet de découvrir, de créer et de partager des prompts créatifs.
+    <p className='desc text-center'>
+      Promptopia is an open-source AI prompting tool for modern world to
+      discover, create and share creative prompts
     </p>
 
     <Feed />
