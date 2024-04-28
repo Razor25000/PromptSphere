@@ -1,3 +1,5 @@
+"use client"
+
 import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Profile from '../../../components/Profile';
