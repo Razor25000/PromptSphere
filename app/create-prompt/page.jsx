@@ -1,25 +1,17 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { useSWRConfig } from 'swr';
 
 import Form from '../../components/Form';
 
 const CreatePrompt = () => {
-  const router = useRouter();
   const { data: session } = useSession();
   const { mutate } = useSWRConfig();
 
   const [submitting, setIsSubmitting] = useState(false);
   const [post, setPost] = useState({ prompt: '', tag: '' });
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    if (router.isReady) {
-      setIsReady(true);
-    }
-  }, [router.isReady]);
+  const [redirectToHome, setRedirectToHome] = useState(false);
 
   const createPrompt = async (e) => {
     e.preventDefault();
@@ -36,9 +28,9 @@ const CreatePrompt = () => {
         }),
       });
 
-      if (response.ok && isReady) {  // Vérifiez si le routeur est prêt avant de rediriger
-        await mutate('/api/prompt'); // Revalidez les données du feed
-        router.push('/');           // Navigation sécurisée
+      if (response.ok) {
+        await mutate('/api/prompt');  // Trigger a revalidation
+        setRedirectToHome(true);  // Set the redirect flag
       }
     } catch (error) {
       console.log(error);
@@ -47,9 +39,11 @@ const CreatePrompt = () => {
     }
   };
 
-  if (!isReady) {
-    return <p>Loading...</p>; // Affiche un message de chargement tant que le routeur n'est pas prêt
-  }
+  useEffect(() => {
+    if (redirectToHome) {
+      window.location.href = '/';  // Perform the redirection client-side
+    }
+  }, [redirectToHome]);
 
   return (
     <Form
