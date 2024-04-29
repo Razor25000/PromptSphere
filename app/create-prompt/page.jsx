@@ -1,28 +1,33 @@
-"use client";
-// use client
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router"; // Correction du chemin d'importation pour useRouter
-import { useSWRConfig } from 'swr'; // Importation pour la revalidation des données
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useSWRConfig } from 'swr';
 
-import Form from "../../components/Form";
+import Form from '../../components/Form';
 
 const CreatePrompt = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { mutate } = useSWRConfig();  // Utilisation de mutate pour la revalidation
+  const { mutate } = useSWRConfig();
 
   const [submitting, setIsSubmitting] = useState(false);
-  const [post, setPost] = useState({ prompt: "", tag: "" });
+  const [post, setPost] = useState({ prompt: '', tag: '' });
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    if (router.isReady) {
+      setIsReady(true);
+    }
+  }, [router.isReady]);
 
   const createPrompt = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/prompt/new", {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' }, // Assurez-vous d'inclure les headers
+      const response = await fetch('/api/prompt/new', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           prompt: post.prompt,
           userId: session?.user.id,
@@ -30,9 +35,9 @@ const CreatePrompt = () => {
         }),
       });
 
-      if (response.ok) {
-        await mutate('/api/prompt'); // Revalidez les données du feed après la création réussie
-        router.push("/");
+      if (response.ok && isReady) {  // Vérifiez si le routeur est prêt avant de rediriger
+        await mutate('/api/prompt'); // Revalidez les données du feed
+        router.push('/');           // Navigation sécurisée
       }
     } catch (error) {
       console.log(error);
@@ -40,6 +45,10 @@ const CreatePrompt = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (!isReady) {
+    return <p>Loading...</p>; // Affiche un message de chargement tant que le routeur n'est pas prêt
+  }
 
   return (
     <Form
