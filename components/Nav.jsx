@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -16,15 +15,10 @@ const Nav = () => {
     });
   }, []);
 
-  const handleSignOut = () => {
-    signOut();
-    // Pas besoin de forcer un rafraîchissement ici, `next-auth` va rafraîchir la session.
-  };
-
   return (
     <nav className='w-full pt-3 mb-16 flex-between'>
-      <Link href='/' passHref>
-        <a className='flex gap-2 flex-center'>
+      <Link href='/'>
+        <div className='flex gap-2 flex-center' style={{ cursor: 'pointer' }}>
           <Image
             src='/assets/images/logo.svg'
             alt='logo'
@@ -32,24 +26,24 @@ const Nav = () => {
             height={30}
             className='object-contain'
           />
-          <p className='logo_text'>Promptopia</p>
-        </a>
+          <p className='logo_text'>PromptSphère</p>
+        </div>
       </Link>
 
       {/* Desktop Navigation */}
       <div className='hidden sm:flex'>
         {session?.user ? (
           <div className='flex gap-3 md:gap-5'>
-            <Link href='/create-prompt' passHref>
-              <a className='black_btn'>Créer un prompt</a>
+            <Link href='/create-prompt'>
+              <button className='black_btn'>Créer un prompt</button>
             </Link>
 
-            <button type='button' onClick={handleSignOut} className='outline_btn'>
+            <button type='button' onClick={() => signOut()} className='outline_btn'>
               Déconnexion
             </button>
 
-            <Link href='/profile' passHref>
-              <a>
+            <Link href='/profile'>
+              <div style={{ cursor: 'pointer' }}>
                 <Image
                   src={session.user.image}
                   width={37}
@@ -57,7 +51,7 @@ const Nav = () => {
                   className='rounded-full'
                   alt='profile'
                 />
-              </a>
+              </div>
             </Link>
           </div>
         ) : (
@@ -77,29 +71,33 @@ const Nav = () => {
       <div className='relative sm:hidden'>
         {session?.user ? (
           <>
-            <Image
-              src={session.user.image}
-              width={37}
-              height={37}
-              className='rounded-full'
-              alt='profile'
-              onClick={() => setToggleDropdown(!toggleDropdown)}
-            />
+            <div onClick={() => setToggleDropdown(!toggleDropdown)} style={{ cursor: 'pointer' }}>
+              <Image
+                src={session.user.image}
+                width={37}
+                height={37}
+                className='rounded-full'
+                alt='profile'
+              />
+            </div>
             {toggleDropdown && (
               <div className='dropdown'>
-                <Link href='/profile' passHref>
-                  <a className='dropdown_link' onClick={() => setToggleDropdown(false)}>
+                <Link href='/profile'>
+                  <button className='dropdown_link' onClick={() => setToggleDropdown(false)}>
                     Mon profil
-                  </a>
+                  </button>
                 </Link>
-                <Link href='/create-prompt' passHref>
-                  <a className='dropdown_link' onClick={() => setToggleDropdown(false)}>
+                <Link href='/create-prompt'>
+                  <button className='dropdown_link' onClick={() => setToggleDropdown(false)}>
                     Créer un prompt
-                  </a>
+                  </button>
                 </Link>
                 <button
                   type='button'
-                  onClick={handleSignOut}
+                  onClick={() => {
+                    setToggleDropdown(false);
+                    signOut();
+                  }}
                   className='w-full mt-5 black_btn'
                 >
                   Déconnexion

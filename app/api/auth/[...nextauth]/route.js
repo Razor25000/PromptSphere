@@ -30,14 +30,15 @@ const handler = NextAuth({
         if (!userExists) {
           await User.create({
             email: profile.email,
-            username: profile.name.replace(" ", "").toLowerCase(),
+            username: profile.name.replace(/\s+/g, "").toLowerCase(),
+
             image: profile.picture,
           });
         }
 
         return true
       } catch (error) {
-        console.log("Error checking if user exists: ", error.message);
+        console.log("Erreur de vérification de l'existence de l'utilisateur : ", error.message);
         return false
       }
     },

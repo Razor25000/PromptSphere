@@ -2,36 +2,35 @@ import Link from "next/link";
 
 const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
   return (
-    <section className='w-full max-w-full flex-start flex-col'>
-      <h1 className='head_text text-left'>
+    <section className='flex-col w-full max-w-full flex-start'>
+      <h1 className='text-left head_text'>
         <span className='blue_gradient'>{type} Post</span>
       </h1>
-      <p className='desc text-left max-w-md'>
-        {type} and share amazing prompts with the world, and let your
-        imagination run wild with any AI-powered platform
+      <p className='max-w-md text-left desc'>
+        Editez et partagez avec le monde entier des prompts incroyables, et laissez libre cours à votre imagination avec toutes les plateformes alimentées par l'IA.(ChatGPT, MistralAI, Midjourney, Perplexity...)
       </p>
 
       <form
         onSubmit={handleSubmit}
-        className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
+        className='flex flex-col w-full max-w-2xl mt-10 gap-7 glassmorphism'
       >
         <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>
-            Your AI Prompt
+          <span className='text-base font-semibold text-gray-700 font-satoshi'>
+            Votre Prompt IA
           </span>
 
           <textarea
             value={post.prompt}
             onChange={(e) => setPost({ ...post, prompt: e.target.value })}
-            placeholder='Write your post here'
+            placeholder='Ecrit ton prompt ici...'
             required
             className='form_textarea '
           />
         </label>
 
         <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>
-            Field of Prompt{" "}
+          <span className='text-base font-semibold text-gray-700 font-satoshi'>
+            Tag du Prompt{" "}
             <span className='font-normal'>
               (#product, #webdevelopment, #idea, etc.)
             </span>
@@ -46,8 +45,8 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           />
         </label>
 
-        <div className='flex-end mx-3 mb-5 gap-4'>
-          <Link href='/' className='text-gray-500 text-sm'>
+        <div className='gap-4 mx-3 mb-5 flex-end'>
+          <Link href='/' className='text-sm text-gray-500'>
             Cancel
           </Link>
 
